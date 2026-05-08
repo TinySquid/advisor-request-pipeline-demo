@@ -1,15 +1,16 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { NoteInput } from '@/components/note-input';
 import { ResultCards } from '@/components/result-cards';
 import { PipelineProgressBar } from '@/components/pipeline-progress';
 import { processRequestStream } from '@/lib/api';
+import type { StreamResult } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { RotateCcw, X } from 'lucide-react';
 import type { PipelineProgress, PipelineResult } from '@repo/shared';
 
 type AppState =
   | { phase: 'idle' }
-  | { phase: 'loading'; progress: PipelineProgress }
+  | { phase: 'loading'; progress: PipelineProgress; note: string }
   | { phase: 'success'; result: PipelineResult }
   | { phase: 'error'; message: string; lastNote: string };
 
@@ -30,21 +31,35 @@ const EXAMPLE_NOTES = [
 
 export default function App() {
   const [state, setState] = useState<AppState>({ phase: 'idle' });
+  const streamRef = useRef<StreamResult | null>(null);
+
   const handleSubmit = async (note: string) => {
-    setState({ phase: 'loading', progress: { steps: [], result: null, error: null } });
+    setState({ phase: 'loading', progress: { steps: [], result: null, error: null }, note });
+
+    const stream = processRequestStream(note, (progress) => {
+      setState((prev) => (prev.phase === 'loading' ? { phase: 'loading', progress, note } : prev));
+    });
+    streamRef.current = stream;
 
     try {
-      const result = await processRequestStream(note, (progress) => {
-        setState({ phase: 'loading', progress });
-      });
+      const result = await stream.result;
+      streamRef.current = null;
       setState({ phase: 'success', result });
     } catch (err) {
+      streamRef.current = null;
+      if (err instanceof DOMException && err.name === 'AbortError') return;
       setState({
         phase: 'error',
         message: err instanceof Error ? err.message : 'Unknown error',
         lastNote: note,
       });
     }
+  };
+
+  const handleCancel = () => {
+    streamRef.current?.abort();
+    streamRef.current = null;
+    setState({ phase: 'idle' });
   };
 
   const handleRetry = () => {
@@ -68,7 +83,11 @@ export default function App() {
       </div>
 
       {/* Input */}
-      <NoteInput onSubmit={handleSubmit} isLoading={state.phase === 'loading'} />
+      <NoteInput
+        onSubmit={handleSubmit}
+        isLoading={state.phase === 'loading'}
+        onCancel={handleCancel}
+      />
 
       {/* Empty State — example notes */}
       {state.phase === 'idle' && (

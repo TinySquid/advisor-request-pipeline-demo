@@ -1,5 +1,5 @@
 import { useState, useEffect, type KeyboardEvent } from 'react';
-import { Mic, MicOff, Loader2, ArrowRight } from 'lucide-react';
+import { Mic, MicOff, Loader2, ArrowRight, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useSpeechRecognition } from '@/hooks/use-speech-recognition';
@@ -7,9 +7,10 @@ import { useSpeechRecognition } from '@/hooks/use-speech-recognition';
 interface NoteInputProps {
   onSubmit: (note: string) => void;
   isLoading: boolean;
+  onCancel?: () => void;
 }
 
-export function NoteInput({ onSubmit, isLoading }: NoteInputProps) {
+export function NoteInput({ onSubmit, isLoading, onCancel }: NoteInputProps) {
   const [note, setNote] = useState('');
   const { transcript, isSupported, isListening, startListening, stopListening } =
     useSpeechRecognition();
@@ -67,19 +68,32 @@ export function NoteInput({ onSubmit, isLoading }: NoteInputProps) {
             </Button>
           )}
         </div>
-        <Button type="button" onClick={handleSubmit} disabled={!note.trim() || isLoading} size="sm">
-          {isLoading ? (
-            <>
-              <Loader2 className="animate-spin" />
-              Processing...
-            </>
-          ) : (
-            <>
-              Submit
-              <ArrowRight />
-            </>
+        <div className="flex items-center gap-2">
+          {isLoading && onCancel && (
+            <Button type="button" variant="outline" size="sm" onClick={onCancel}>
+              <X />
+              Cancel
+            </Button>
           )}
-        </Button>
+          <Button
+            type="button"
+            onClick={handleSubmit}
+            disabled={!note.trim() || isLoading}
+            size="sm"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="animate-spin" />
+                Processing...
+              </>
+            ) : (
+              <>
+                Submit
+                <ArrowRight />
+              </>
+            )}
+          </Button>
+        </div>
       </div>
     </div>
   );

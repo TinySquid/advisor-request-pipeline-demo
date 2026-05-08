@@ -58,6 +58,15 @@ processRoute.post('/process-request/stream', async (c) => {
       let workflowStatus: string | null = null;
       let failedStepMessage: string | null = null;
       let idleTimer: ReturnType<typeof setTimeout> | null = null;
+      let cancelled = false;
+
+      c.req.raw.signal.addEventListener('abort', () => {
+        cancelled = true;
+
+        if (idleTimer) clearTimeout(idleTimer);
+        runOutput.fullStream.cancel();
+        run.cancel().catch(() => {});
+      });
 
       const resetIdleTimer = () => {
         if (idleTimer) clearTimeout(idleTimer);
@@ -70,6 +79,8 @@ processRoute.post('/process-request/stream', async (c) => {
 
       try {
         for await (const event of runOutput.fullStream) {
+          if (cancelled) break;
+
           resetIdleTimer();
 
           if (FORWARDED_EVENTS.has(event.type)) {
@@ -124,6 +135,9 @@ processRoute.post('/process-request/stream', async (c) => {
         });
       } finally {
         if (idleTimer) clearTimeout(idleTimer);
+        if (cancelled) {
+          run.cancel().catch(() => {});
+        }
         controller.close();
       }
     },
