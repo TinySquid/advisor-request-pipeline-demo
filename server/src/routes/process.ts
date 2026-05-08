@@ -10,9 +10,8 @@ const FORWARDED_EVENTS = new Set([
   'workflow-finish',
 ]);
 
-// Abort stream after waiting too long
-const IDLE_TIMEOUT_MS = 120_000;
-const WORKFLOW_TIMEOUT_MS = 30_000;
+const IDLE_TIMEOUT_MS = 30_000;
+const WORKFLOW_TIMEOUT_MS = 60_000;
 
 export const processRoute = new Hono();
 
