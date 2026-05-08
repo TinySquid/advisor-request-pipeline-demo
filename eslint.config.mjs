@@ -5,7 +5,15 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 
 export default tseslint.config(
   {
-    ignores: ['**/dist/', '**/node_modules/', '**/.mastra/', '**/web/src/components/ui/', 'docs/'],
+    ignores: [
+      '.pi/**',
+      '.agents/**',
+      '**/dist/',
+      '**/node_modules/',
+      '**/.mastra/',
+      '**/web/src/components/ui/',
+      'docs/',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
