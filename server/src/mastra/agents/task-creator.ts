@@ -32,7 +32,6 @@ Rules:
 - Assignee is always "advisor" (the person who created the note).
 - Description should be actionable: "Follow up with [Name]" or "Send listings to [Name]".
 - If the contact name is missing, use "the lead" in the description instead of "[Name]".
-- If followUpNeeded is false, create a general "Review contact record" task with low priority and due date today + 7 days.
-- Return your response as a JSON object matching the required structured output schema.`,
+- If followUpNeeded is false, create a general "Review contact record" task with low priority and due date today + 7 days.`,
   model: TASK_CREATOR_MODEL,
 });

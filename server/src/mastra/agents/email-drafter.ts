@@ -23,7 +23,6 @@ Rules:
 - Subject line should be specific and reference the interaction context.
 - Set the tone field to match the lead: "enthusiastic" (hot), "friendly" (warm), or "gentle" (cold).
 - Set the cta field to the exact call-to-action sentence used in the email body.
-- Never be pushy or salesy. Professional warmth.
-- Return your response as a JSON object matching the required structured output schema.`,
+- Never be pushy or salesy. Professional warmth.`,
   model: EMAIL_DRAFTER_MODEL,
 });

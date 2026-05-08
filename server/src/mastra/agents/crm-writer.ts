@@ -25,7 +25,6 @@ Rules:
   - "active" if there's ongoing engagement
   - "closed" if the lead is no longer viable
 - Write concise but complete notes summarizing the interaction. Include budget range, property type, and timeline.
-- If email/phone is not provided, return null. Do not invent contact details.
-- Return your response as a JSON object matching the required structured output schema.`,
+- If email/phone is not provided, return null. Do not invent contact details.`,
   model: CRM_WRITER_MODEL,
 });

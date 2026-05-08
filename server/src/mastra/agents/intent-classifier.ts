@@ -20,7 +20,6 @@ Rules:
 - Make reasonable inferences but don't hallucinate. If in doubt, return null.
 - Set followUpNeeded to true only if the advisor explicitly mentions a next step, callback, or need to follow up. Otherwise false.
 - If multiple people are mentioned, use the primary contact (the person expressing interest or whose details are provided).
-- If a name is unclear or partial, return it as-is rather than guessing.
-- Return your response as a JSON object matching the required structured output schema.`,
+- If a name is unclear or partial, return it as-is rather than guessing.`,
   model: INTENT_CLASSIFIER_MODEL,
 });
