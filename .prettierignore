@@ -1,5 +1,7 @@
 node_modules/
 dist/
+.mastra/
 .env
 *.log
 .DS_Store
+pnpm-lock.yaml

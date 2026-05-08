@@ -4,9 +4,18 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 
 export default tseslint.config(
-  { ignores: ['**/dist/', '**/node_modules/', '**/web/src/components/ui/'] },
+  {
+    ignores: ['**/dist/', '**/node_modules/', '**/.mastra/', '**/web/src/components/ui/', 'docs/'],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
+  {
+    files: ['**/*.{ts,tsx,js,mjs,cjs}'],
+    rules: {
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-explicit-any': 'warn',
+    },
+  },
   {
     files: ['web/src/**/*.{ts,tsx}'],
     plugins: {
@@ -16,12 +25,6 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-    },
-  },
-  {
-    rules: {
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      '@typescript-eslint/no-explicit-any': 'warn',
     },
   },
 );
