@@ -1,5 +1,5 @@
 import { Agent } from '@mastra/core/agent';
-import { DEFAULT_MODEL } from '../model.js';
+import { EMAIL_DRAFTER_MODEL } from '../model.js';
 
 export const emailDrafterAgent = new Agent({
   id: 'email-drafter',
@@ -21,5 +21,5 @@ Rules:
 - If no email was provided, use "contact@email.com" as a placeholder in the "to" field.
 - Subject line should be specific and reference the interaction context.
 - Never be pushy or salesy. Professional warmth.`,
-  model: DEFAULT_MODEL,
+  model: EMAIL_DRAFTER_MODEL,
 });

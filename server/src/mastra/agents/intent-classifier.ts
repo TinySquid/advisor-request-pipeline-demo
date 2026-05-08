@@ -1,5 +1,5 @@
 import { Agent } from '@mastra/core/agent';
-import { DEFAULT_MODEL } from '../model.js';
+import { INTENT_CLASSIFIER_MODEL } from '../model.js';
 
 export const intentClassifierAgent = new Agent({
   id: 'intent-classifier',
@@ -18,5 +18,5 @@ Rules:
 - Preserve the full original context in rawContext — downstream agents need the complete picture.
 - Be precise with numbers. "$2M" → 2000000. "2BR" → "2BR" (keep as-is).
 - Make reasonable inferences but don't hallucinate. If in doubt, return null.`,
-  model: DEFAULT_MODEL,
+  model: INTENT_CLASSIFIER_MODEL,
 });

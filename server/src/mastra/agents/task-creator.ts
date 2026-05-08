@@ -1,5 +1,5 @@
 import { Agent } from '@mastra/core/agent';
-import { DEFAULT_MODEL } from '../model.js';
+import { TASK_CREATOR_MODEL } from '../model.js';
 
 export const taskCreatorAgent = new Agent({
   id: 'task-creator',
@@ -30,5 +30,5 @@ Rules:
   - "other" → anything that doesn't fit above
 - Assignee is always "advisor" (the person who created the note).
 - Description should be actionable: "Follow up with [Name]" or "Send listings to [Name]".`,
-  model: DEFAULT_MODEL,
+  model: TASK_CREATOR_MODEL,
 });

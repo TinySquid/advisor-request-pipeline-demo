@@ -1,5 +1,5 @@
 import { Agent } from '@mastra/core/agent';
-import { DEFAULT_MODEL } from '../model.js';
+import { CRM_WRITER_MODEL } from '../model.js';
 
 export const crmWriterAgent = new Agent({
   id: 'crm-writer',
@@ -24,5 +24,5 @@ Rules:
   - "closed" if the lead is no longer viable
 - Write concise but complete notes summarizing the interaction.
 - If email/phone is not provided, return null. Do not invent contact details.`,
-  model: DEFAULT_MODEL,
+  model: CRM_WRITER_MODEL,
 });
