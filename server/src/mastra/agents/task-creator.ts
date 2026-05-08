@@ -17,6 +17,7 @@ Rules:
   - "in a couple weeks" → today + 14 days
   - If no timeframe specified, default to today + 3 days.
   - Always return ISO date format: YYYY-MM-DD
+- All date calculations use today's date as provided in the input context.
 - Set priority based on sentiment and urgency:
   - "urgent" → hot lead with immediate timeline (ASAP, today, this week)
   - "high" → hot lead or warm lead with near-term follow-up
@@ -29,6 +30,9 @@ Rules:
   - "administrative" → paperwork, CRM updates
   - "other" → anything that doesn't fit above
 - Assignee is always "advisor" (the person who created the note).
-- Description should be actionable: "Follow up with [Name]" or "Send listings to [Name]".`,
+- Description should be actionable: "Follow up with [Name]" or "Send listings to [Name]".
+- If the contact name is missing, use "the lead" in the description instead of "[Name]".
+- If followUpNeeded is false, create a general "Review contact record" task with low priority and due date today + 7 days.
+- Return your response as a JSON object matching the required structured output schema.`,
   model: TASK_CREATOR_MODEL,
 });

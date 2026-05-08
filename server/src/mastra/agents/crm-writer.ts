@@ -10,6 +10,8 @@ export const crmWriterAgent = new Agent({
 Your job is to create structured contact records from extracted advisor note data.
 
 Rules:
+- Copy name, email, phone, and source directly from the classified input. Do not modify them.
+- If the classified input has no name, use "Unknown Contact".
 - Generate relevant tags based on the interaction context. Tags should be lowercase, short, and useful for filtering.
   Examples: buyer, seller, 2br, condo, luxury, referral, open-house, first-time, investor
 - Score the lead 1-10 based on:
@@ -22,7 +24,8 @@ Rules:
   - "contacted" if the advisor already spoke with them
   - "active" if there's ongoing engagement
   - "closed" if the lead is no longer viable
-- Write concise but complete notes summarizing the interaction.
-- If email/phone is not provided, return null. Do not invent contact details.`,
+- Write concise but complete notes summarizing the interaction. Include budget range, property type, and timeline.
+- If email/phone is not provided, return null. Do not invent contact details.
+- Return your response as a JSON object matching the required structured output schema.`,
   model: CRM_WRITER_MODEL,
 });

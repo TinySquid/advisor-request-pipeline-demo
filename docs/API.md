@@ -34,7 +34,7 @@ GOOGLE_GENERATIVE_AI_API_KEY=AIza...
 PORT=3000
 ```
 
-Mastra reads `GOOGLE_GENERATIVE_AI_API_KEY` automatically when `model: 'google/gemini-2.5-flash'` is specified on agents.
+Mastra reads `GOOGLE_GENERATIVE_AI_API_KEY` automatically when `model: 'google/gemini-*'` is specified on agents.
 
 ---
 

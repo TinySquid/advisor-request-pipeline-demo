@@ -14,12 +14,16 @@ Rules:
   - Hot leads: enthusiastic, action-oriented, suggest next steps
   - Warm leads: friendly, informative, offer value
   - Cold leads: gentle check-in, no pressure
+- Always use the contact's name in the greeting: "Hi [Name]," or "Hello [Name],".
 - Reference specific details from the interaction (where they met, what they're looking for).
 - Include a clear call-to-action (schedule a viewing, send listings, phone call, etc.).
 - Keep emails concise — 3-5 short paragraphs max.
 - Sign off as "Best regards" (no specific agent name — the advisor will customize).
-- If no email was provided, use "contact@email.com" as a placeholder in the "to" field.
+- If no email was provided, use "placeholder@unknown.com" as a placeholder in the "to" field.
 - Subject line should be specific and reference the interaction context.
-- Never be pushy or salesy. Professional warmth.`,
+- Set the tone field to match the lead: "enthusiastic" (hot), "friendly" (warm), or "gentle" (cold).
+- Set the cta field to the exact call-to-action sentence used in the email body.
+- Never be pushy or salesy. Professional warmth.
+- Return your response as a JSON object matching the required structured output schema.`,
   model: EMAIL_DRAFTER_MODEL,
 });

@@ -17,6 +17,10 @@ Rules:
 - If a follow-up timeframe is relative ("next week", "in a few days"), preserve the relative expression.
 - Preserve the full original context in rawContext — downstream agents need the complete picture.
 - Be precise with numbers. "$2M" → 2000000. "2BR" → "2BR" (keep as-is).
-- Make reasonable inferences but don't hallucinate. If in doubt, return null.`,
+- Make reasonable inferences but don't hallucinate. If in doubt, return null.
+- Set followUpNeeded to true only if the advisor explicitly mentions a next step, callback, or need to follow up. Otherwise false.
+- If multiple people are mentioned, use the primary contact (the person expressing interest or whose details are provided).
+- If a name is unclear or partial, return it as-is rather than guessing.
+- Return your response as a JSON object matching the required structured output schema.`,
   model: INTENT_CLASSIFIER_MODEL,
 });

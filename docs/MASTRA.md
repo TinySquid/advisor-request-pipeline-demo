@@ -12,19 +12,13 @@ Our pipeline uses 4 agents inside a single workflow with parallel execution.
 
 ## Model Configuration
 
-All agents use the same model:
+Agents can use different models, see `model.ts`:
 
 ```ts
 const MODEL = 'google/gemini-2.5-flash';
 ```
 
 Mastra reads `GOOGLE_GENERATIVE_AI_API_KEY` from environment automatically when it encounters the `google/` prefix.
-
-Gemini 2.5 Flash specifics:
-
-- Supports `response_format` for structured output → no need for `jsonPromptInjection`
-- Supports tool calling (not used in this demo, but available)
-- Each request uses ~4 LLM calls (1 classify + 3 parallel)
 
 ---
 
@@ -291,11 +285,11 @@ const result = await agent.generate(prompt, {
 const data = result.object; // typed as z.infer<typeof MyZodSchema>
 ```
 
-**Gemini 2.5 Flash compatibility:**
+**Model compatibility:**
 
-- Supports `response_format` natively ✅
+- All current models support `response_format` natively ✅
 - `jsonPromptInjection` not needed ✅
-- If we add tools later, need `jsonPromptInjection: true` for Gemini 2.5 ⚠️
+- If we add tools later, verify compatibility with the specific model used ⚠️
 
 **Error handling:**
 Default `errorStrategy` is `'strict'` (throws on validation failure). For production, consider `'warn'` to log and continue. For this demo, `'strict'` is fine — if schema validation fails, the workflow step fails and the user gets a 500.
